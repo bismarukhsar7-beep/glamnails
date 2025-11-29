@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    private $products = [
+
+        1 => ['name' => 'Rose Pink Polish', 'price' => 860, 'category' => 'Nail Polishes', 'image' => 'nailpolish1.jpg', 'desc' => 'Glossy rose pink nail polish with long-lasting shine.'],
+        2 => ['name' => 'Coral Bliss Polish', 'price' => 870, 'category' => 'Nail Polishes', 'image' => 'nailpolish2.jpg', 'desc' => 'Soft coral shade perfect for summer vibes.'],
+        3 => ['name' => 'Ruby Red Polish', 'price' => 880, 'category' => 'Nail Polishes', 'image' => 'nailpolish3.jpg', 'desc' => 'Rich red polish for bold and confident look.'],
+        4 => ['name' => 'Lavender Dream Polish', 'price' => 890, 'category' => 'Nail Polishes', 'image' => 'nailpolish4.jpg', 'desc' => 'A dreamy lavender shade for everyday glam.'],
+        5 => ['name' => 'Nude Elegance Polish', 'price' => 900, 'category' => 'Nail Polishes', 'image' => 'nailpolish5.jpg', 'desc' => 'Perfect nude tone for classy and simple nails.'],
+        6 => ['name' => 'Rhinestone Set', 'price' => 525, 'category' => 'Accessories', 'image' => 'accessory1.jpg', 'desc' => 'Add sparkle with assorted rhinestones for nail art.'],
+        7 => ['name' => 'Nail Stickers Pack', 'price' => 540, 'category' => 'Accessories', 'image' => 'accessory2.jpg', 'desc' => 'Trendy nail stickers for easy styling.'],
+        8 => ['name' => 'Glam Foil Set', 'price' => 555, 'category' => 'Accessories', 'image' => 'accessory3.jpg', 'desc' => 'Add metallic flair with foil designs.'],
+        9 => ['name' => 'Pearl Art Kit', 'price' => 570, 'category' => 'Accessories', 'image' => 'accessory4.jpg', 'desc' => 'Classic pearl set for elegant nail designs.'],
+        10 => ['name' => 'Chrome Powder', 'price' => 585, 'category' => 'Accessories', 'image' => 'accessory5.jpg', 'desc' => 'Give your nails a mirror-like chrome finish.'],
+        11 => ['name' => 'Cuticle Oil', 'price' => 970, 'category' => 'Nail Care', 'image' => 'nailcare1.jpg', 'desc' => 'Keep your cuticles soft and hydrated.'],
+        12 => ['name' => 'Nail Strengthener', 'price' => 990, 'category' => 'Nail Care', 'image' => 'nailcare2.jpg', 'desc' => 'Strengthen weak nails with nourishing formula.'],
+        13 => ['name' => 'Nail Cleanser', 'price' => 1010, 'category' => 'Nail Care', 'image' => 'nailcare3.jpg', 'desc' => 'Cleans and preps your nails before polish.'],
+        14 => ['name' => 'Hand Moisturizer', 'price' => 1030, 'category' => 'Nail Care', 'image' => 'nailcare4.jpg', 'desc' => 'Smooth hand lotion for silky soft skin.'],
+        15 => ['name' => 'Nail Serum', 'price' => 1050, 'category' => 'Nail Care', 'image' => 'nailcare5.jpg', 'desc' => 'Boost nail health and shine with serum.'],
+        16 => ['name' => 'Manicure Set', 'price' => 790, 'category' => 'Tools', 'image' => 'tool1.jpg', 'desc' => 'Complete manicure kit with all essentials.'],
+        17 => ['name' => 'Nail Buffer', 'price' => 820, 'category' => 'Tools', 'image' => 'tool2.jpg', 'desc' => 'Smooth and shape your nails to perfection.'],
+        18 => ['name' => 'Cuticle Pusher', 'price' => 850, 'category' => 'Tools', 'image' => 'tool3.jpg', 'desc' => 'Professional tool for neat cuticle care.'],
+        19 => ['name' => 'Nail File Set', 'price' => 880, 'category' => 'Tools', 'image' => 'tool4.jpg', 'desc' => 'High-quality files for salon-like finish.'],
+        20 => ['name' => 'UV Lamp', 'price' => 910, 'category' => 'Tools', 'image' => 'tool5.jpg', 'desc' => 'Portable UV lamp for gel polish curing.'],
+    ];
+
+    // 🔍 Show all products (with optional search)
+    public function index(Request $request)
+    {
+        $query = strtolower($request->input('query'));
+
+        $filteredProducts = array_filter($this->products, function ($product) use ($query) {
+            if (!$query) return true;
+            return str_contains(strtolower($product['name']), $query)
+                || str_contains(strtolower($product['category']), $query)
+                || str_contains(strtolower($product['desc']), $query);
+        });
+
+        return view('products.index', ['products' => $filteredProducts, 'query' => $query]);
+    }
+
+    // 📄 Show single product detail
+    public function show($id)
+    {
+        if (!array_key_exists($id, $this->products)) {
+            abort(404, 'Product not found');
+        }
+
+        $product = $this->products[$id];
+        return view('products.show', compact('product'));
+    }
+}

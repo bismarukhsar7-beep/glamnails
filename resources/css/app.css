@@ -1,0 +1,8 @@
+@import 'bootstrap/dist/css/bootstrap.css';
+
+#explore_more_shop_now_button{
+    background-color: #c63e70;
+}
+#explore_more_shop_now_button:hover{
+    background-color: #fdd1de;
+}

@@ -1,0 +1,105 @@
+@extends('layouts.app')
+
+@section('title', 'Our Products - GlamNails')
+
+@section('content')
+    <div class="container py-5">
+        <h1 class="text-center fw-bold mb-5" style="color:#c63e70;">💅 Our Glamorous Collection 💅</h1>
+
+        {{-- ============ CATEGORY: Nail Polishes ============ --}}
+        <h3 class="fw-bold mb-4" style="color:#c63e70;">Nail Polishes</h3>
+        <div class="row g-4 mb-5 justify-content-center">
+            @for ($i = 1; $i <= 5; $i++)
+                <div class="col-md-2 col-sm-4 col-6">
+                    <div class="card border-0 shadow-sm rounded-4 product-card h-100 text-center">
+                        <img src="{{ asset('images/nailpolish' . $i . '.jpg') }}" alt="Nail Polish {{$i}}"
+                             class="card-img-top" style="height:180px; object-fit:cover; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+                        <div class="card-body">
+                            <h6 class="fw-bold" style="color:#c63e70;">Rose Pink Shade {{$i}}</h6>
+                            <p class="text-muted small mb-2">PKR {{850 + $i * 10}}</p>
+                            <a href="{{ url('/products/' . $i) }}" class="btn btn-sm"
+                               style="background-color:#dc769a; color:white; border-radius:25px;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+
+        {{-- ============ CATEGORY: Nail Accessories ============ --}}
+        <h3 class="fw-bold mb-4" style="color:#c63e70;">Nail Accessories</h3>
+        <div class="row g-4 mb-5 justify-content-center">
+            @for ($i = 1; $i <= 5; $i++)
+                <div class="col-md-2 col-sm-4 col-6">
+                    <div class="card border-0 shadow-sm rounded-4 product-card h-100 text-center">
+                        <img src="{{ asset('images/accessory' . $i . '.jpg') }}" alt="Accessory {{$i}}"
+                             class="card-img-top" style="height:180px; object-fit:cover; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+                        <div class="card-body">
+                            <h6 class="fw-bold" style="color:#c63e70;">Glam Accessory {{$i}}</h6>
+                            <p class="text-muted small mb-2">PKR {{450 + $i * 15}}</p>
+                            <a href="{{ url('/products/' . (5 + $i)) }}" class="btn btn-sm"
+                               style="background-color:#dc769a; color:white; border-radius:25px;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+
+        {{-- ============ CATEGORY: Nail Care ============ --}}
+        <h3 class="fw-bold mb-4" style="color:#c63e70;">Nail Care</h3>
+        <div class="row g-4 mb-5 justify-content-center">
+            @for ($i = 1; $i <= 5; $i++)
+                <div class="col-md-2 col-sm-4 col-6">
+                    <div class="card border-0 shadow-sm rounded-4 product-card h-100 text-center">
+                        <img src="{{ asset('images/nailcare' . $i . '.jpg') }}" alt="Nail Care {{$i}}"
+                             class="card-img-top" style="height:180px; object-fit:cover; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+                        <div class="card-body">
+                            <h6 class="fw-bold" style="color:#c63e70;">Care Kit {{$i}}</h6>
+                            <p class="text-muted small mb-2">PKR {{950 + $i * 20}}</p>
+                            <a href="{{ url('/products/' . (10 + $i)) }}" class="btn btn-sm"
+                               style="background-color:#dc769a; color:white; border-radius:25px;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+
+        {{-- ============ CATEGORY: Tools & Kits ============ --}}
+        <h3 class="fw-bold mb-4" style="color:#c63e70;">Tools & Kits</h3>
+        <div class="row g-4 mb-5 justify-content-center">
+            @for ($i = 1; $i <= 5; $i++)
+                <div class="col-md-2 col-sm-4 col-6">
+                    <div class="card border-0 shadow-sm rounded-4 product-card h-100 text-center">
+                        <img src="{{ asset('images/tool' . $i . '.jpg') }}" alt="Tool {{$i}}"
+                             class="card-img-top" style="height:180px; object-fit:cover; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+                        <div class="card-body">
+                            <h6 class="fw-bold" style="color:#c63e70;">Glam Tool {{$i}}</h6>
+                            <p class="text-muted small mb-2">PKR {{700 + $i * 30}}</p>
+                            <a href="{{ url('/products/' . (15 + $i)) }}" class="btn btn-sm"
+                               style="background-color:#dc769a; color:white; border-radius:25px;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+    </div>
+
+    {{-- ✨ Styling ✨ --}}
+    <style>
+        .product-card {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 18px rgba(198, 62, 112, 0.25);
+        }
+
+        .product-card img {
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+@endsection
