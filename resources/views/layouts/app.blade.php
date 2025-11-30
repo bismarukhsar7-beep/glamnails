@@ -1,164 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'GlamNails')</title>
+    <html>
+    <head>
+        <title>Beauty Store</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+        <style>
+            .nav-link.active {
+                color: #c63e70 !important;
+                font-weight: bold;
+            }
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fff5f7;
-        }
-        nav.navbar {
-            background-color: #dc769a;
-        }
-        nav a.nav-link, .navbar-brand {
-            color: white !important;
-            font-weight: 600;
-        }
-        nav a.nav-link:hover {
-            text-decoration: underline;
-        }
-        footer {
-            background-color: #dc769a;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
+            .dropdown-item.active {
+                background-color: #f0d3cf !important;
+                color: #fff !important;
+            }
+        </style>
+    </head>
 
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        main {
-            flex: 1;
-        }
-        footer {
-            margin-top: auto;
-        }
-    </style>
-</head>
-<body>
+    <body style="background-color: #f0d3cf;">
 
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">GlamNails</a>
+    <!-- NAVBAR -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: rgba(248,149,179,0.84)">
+        <div class="container">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold" href="/" style="color:#c63e70;">
+                GlamNails
+            </a>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <ul class="navbar-nav ms-auto">
+            <div class="collapse navbar-collapse" id="mainNavbar">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">Home</a>
-                </li>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                {{-- UPDATED PRODUCTS DROPDOWN --}}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Categories
+                    <!-- Home -->
+                    <li class="nav-item ">
+                        <a class="nav-link fw-bold" href="/" style="color:#c63e70;">Home</a>
+                    </li>
+
+                    <!-- Products Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="productsDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" style="color:#c63e70;">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu fw-bold">
+
+                            <li><a class="dropdown-item" href="{{ route('category.products', 'nail polishes') }}">Nail Polishes</a></li>
+                            <li><a class="dropdown-item" href="{{ route('category.products', 'accessories') }}">Accessories</a></li>
+                            <li><a class="dropdown-item" href="{{ route('category.products', 'nail care') }}">Nail Care</a></li>
+                            <li><a class="dropdown-item" href="{{ route('category.products', 'tools') }}">Tools</a></li>
+
+                        </ul>
+
+                    </li>
+
+                    <!-- Contact -->
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="/contact" style="color:#c63e70;">Contact</a>
+                    </li>
+
+                    <!-- Cart -->
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="/cart" style="color:#c63e70;">Cart</a>
+                    </li>
+
+                    <!-- Search Bar -->
+                    <form action="{{ route('products.index') }}" method="GET" class="d-flex ms-3">
+                        <input class="form-control" type="search" placeholder="Search products..." name="query"
+                               style="border-color:#c63e70;">
+                        <button class="btn ms-2" type="submit" style="background-color:#c63e70; color:white;">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+
+                    <!-- Admin Login Button -->
+                    <a href="/admin/login" class="btn ms-3" style="background-color:#c63e70; color:white;">
+                        Admin Login
                     </a>
 
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                </ul>
 
-                        <li>
-                            <a class="dropdown-item" href="{{ route('products.index', ['category' => 'Nail Polishes']) }}">
-                                Nail Polishes
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item" href="{{ route('products.index', ['category' => 'Accessories']) }}">
-                                Accessories
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item" href="{{ route('products.index', ['category' => 'Nail Care']) }}">
-                                Nail Care
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item" href="{{ route('products.index', ['category' => 'Tools']) }}">
-                                Tools
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
+            </div>
+        </div>
+    </nav>
 
 
-                {{-- Cart --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('cart.index') }}">
-                        🛒 Cart
-                        @if(session('cart') && count(session('cart')) > 0)
-                            <span class="badge bg-danger">{{ count(session('cart')) }}</span>
-                        @endif
-                    </a>
-                </li>
+    <!-- PAGE CONTENT -->
+    <div class="container mt-4 mb-5">
+        @yield('content')
+    </div>
 
-                {{-- Contact --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contact') }}">Contact</a>
-                </li>
+    <!-- FOOTER -->
+    <footer style="background:#c9487b; padding:20px; margin-top:10px;">
+        <div class="container text-center">
 
-                {{-- Search --}}
-                <form action="{{ route('products.index') }}" method="GET" class="d-flex ms-3" role="search">
-                    <input class="form-control me-2" type="search" name="query"
-                           placeholder="Search products..." aria-label="Search" required>
-                    <button class="btn btn-outline-light" type="submit">Search</button>
-                </form>
+            <h5 style="color:#ffffff; font-weight:bold; margin-bottom:15px;">
+                GlamNails
+            </h5>
 
-            </ul>
+            <div class="d-flex justify-content-center gap-3" style="font-size:20px;">
+                <a href="#" style="color:#ffffff;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color:#ffffff;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color:#ffffff;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color:#ffffff;"><i class="fab fa-youtube"></i></a>
+            </div>
 
         </div>
-    </div>
-</nav>
+    </footer>
 
-<main class="container py-4">
-    @yield('content')
-</main>
 
-<footer class="text-center" style="background-color:#dc769a; color:white; font-family:'Poppins', sans-serif; padding:10px 0;">
+    <!-- ICONS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 
-    <p class="fw-semibold mb-1" style="font-size:14px;">
-        © {{ date('Y') }} GlamNails. All Rights Reserved.
-    </p>
+    <style>
+        footer .social-icons a {
+            color: #ffffff;
+            font-size: 22px;
+            margin: 0 12px;
+            transition: 0.3s;
+        }
 
-    <div style="font-size:18px;">
-        <a href="#" class="text-decoration-none mx-2" style="color:white;">
-            <i class="bi bi-instagram"></i>
-        </a>
-        <a href="#" class="text-decoration-none mx-2" style="color:white;">
-            <i class="bi bi-facebook"></i>
-        </a>
-        <a href="#" class="text-decoration-none mx-2" style="color:white;">
-            <i class="bi bi-tiktok"></i>
-        </a>
-    </div>
+        footer .social-icons a:hover {
+            color: #c63e70 !important;
+        }
+    </style>
 
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
-</html>
+    </body>
+    </html>
+</>
