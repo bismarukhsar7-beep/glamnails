@@ -30,7 +30,7 @@
                         <div class="card shadow-sm p-3 d-flex flex-row align-items-center" style="background:#fff8fa;">
 
                             {{-- Product Image --}}
-                            <img src="{{ asset('images/' . $product->image) }}"
+                            <img src="{{ $product->image_url }}"
                                  alt="{{ $product->name }}"
                                  style="width:100px; height:100px; object-fit:cover; border-radius:10px;">
 

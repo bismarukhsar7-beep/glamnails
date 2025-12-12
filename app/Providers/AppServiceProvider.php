@@ -15,9 +15,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-//        // Share categories with all Blade views
-//        View::composer('*', function ($view) {
-//            $view->with('categories', Category::all());
-//        });
+        // Share categories with layout navbar dropdown
+        View::composer('layouts.app', function ($view) {
+            $view->with('navCategories', Category::orderBy('name')->get());
+        });
     }
 }
