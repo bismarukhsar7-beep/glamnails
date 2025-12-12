@@ -3,56 +3,50 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Product Model
+ * Category Model
  *
- * Represents a product in the e-commerce system.
- * Handles product data, relationships, and image URL resolution.
+ * Represents a product category in the e-commerce system.
+ * Categories organize products and can have associated images.
  */
-class Product extends Model
+class Category extends Model
 {
+    use HasFactory;
+
     /**
      * Mass assignable attributes
      *
      * @var array<string>
      */
-    protected $fillable = [
-        'name',
-        'price',
-        'category',
-        'image',
-        'desc',
-    ];
+    protected $fillable = ['name', 'description', 'image'];
 
     /**
-     * Get the reviews associated with this product
+     * Get products that belong to this category (matched by name field).
+     *
+     * Note: This relationship uses 'category' field on products table
+     * matching against 'name' field on categories table.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function reviews()
+    public function products()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Product::class, 'category', 'name');
     }
 
     /**
      * Resolve a usable image URL regardless of storage location.
      *
-     * This accessor handles different image storage scenarios:
-     * - Absolute URLs (http/https)
+     * This accessor handles different image storage scenarios for categories:
      * - Laravel storage paths
      * - Legacy public/images paths
      *
-     * @return string The fully qualified URL to the product image
+     * @return string The fully qualified URL to the category image
      */
     public function getImageUrlAttribute(): string
     {
         $img = $this->image ?? '';
-
-        // If already absolute (http/https), return as-is
-        if (preg_match('#^https?://#i', $img)) {
-            return $img;
-        }
 
         // If path starts with storage/ or uploads/, serve via asset()
         if (str_starts_with($img, 'storage/') || str_starts_with($img, 'uploads/')) {
@@ -63,3 +57,4 @@ class Product extends Model
         return asset('images/' . ltrim($img, '/'));
     }
 }
+

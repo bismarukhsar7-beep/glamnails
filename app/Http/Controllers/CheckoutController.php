@@ -43,6 +43,7 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
         ]);
@@ -65,7 +66,7 @@ class CheckoutController extends Controller
         // Create order
         $order = Order::create([
             'name' => $request->name,
-            'email' => $request->email ?? '',
+            'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
             'total' => $total,

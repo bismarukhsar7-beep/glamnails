@@ -25,15 +25,19 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Full Name</label>
-                            <input type="text" class="form-control rounded-pill" placeholder="Enter your name" required>
+                            <input type="text" name="name" class="form-control rounded-pill" placeholder="Enter your name" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Email Address</label>
-                            <input type="email" class="form-control rounded-pill" placeholder="Enter your email" required>
+                            <input type="email" name="email" class="form-control rounded-pill" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Phone</label>
+                            <input type="text" name="phone" class="form-control rounded-pill" placeholder="Enter your phone (optional)">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Your Message</label>
-                            <textarea class="form-control rounded-4" rows="4" placeholder="Type your message..." required></textarea>
+                            <textarea name="message" class="form-control rounded-4" rows="4" placeholder="Type your message..." required></textarea>
                         </div>
                         <button type="submit" class="btn w-100 py-2 fw-semibold rounded-pill" style="background-color:#c63e70; color:white;">
                             Send Message

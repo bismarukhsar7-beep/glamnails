@@ -7,6 +7,18 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+    /**
+     * Ensure admin is logged in before rendering a page.
+     */
+    private function ensureAuthenticated()
+    {
+        if (!session()->has('admin_id')) {
+            return redirect('/admin/login');
+        }
+
+        return null;
+    }
+
 // LOGIN
 public function login(Request $request)
 {
@@ -25,8 +37,8 @@ return back()->with('error', 'Invalid login details');
 // DASHBOARD PAGE
 public function dashboard()
 {
-if (!session()->has('admin_id')) {
-return redirect('/admin/login');
+if ($redirect = $this->ensureAuthenticated()) {
+return $redirect;
 }
 
 return view('admin.dashboard');
@@ -36,6 +48,35 @@ return view('admin.dashboard');
         $request->session()->forget('admin_logged_in');
 
         return redirect('/'); // redirect to main website homepage
+    }
+
+    // MANAGE CATEGORIES
+    public function categories()
+    {
+        if ($redirect = $this->ensureAuthenticated()) {
+            return $redirect;
+        }
+
+        return view('admin.categories');
+    }
+
+    // MANAGE ORDERS
+    public function orders()
+    {
+        if ($redirect = $this->ensureAuthenticated()) {
+            return $redirect;
+        }
+
+        return view('admin.orders');
+    }
+
+    // CONTACT MESSAGES
+    public function messages()
+    {
+        if ($redirect = $this->ensureAuthenticated()) {
+            return $redirect;
+        }
+        return redirect()->route('admin.messages');
     }
 
 }

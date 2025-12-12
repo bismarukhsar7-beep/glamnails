@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlamNails - Review Image Upload Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0d3cf 0%, #fff8fa 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        .demo-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 35px rgba(198, 62, 112, 0.15);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background: linear-gradient(135deg, #fff8fa 0%, #fff0f5 100%);
+            border: 2px dashed #dc769a;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .image-preview {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 12px;
+            border: 2px solid #dc769a;
+            display: none;
+            margin-top: 1rem;
+        }
+        .rating-stars {
+            color: #dc769a;
+            font-size: 1.2rem;
+        }
+        .feature-list {
+            background: #fff0f5;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .feature-list h5 {
+            color: #c63e70;
+            margin-bottom: 1rem;
+        }
+        .feature-list ul li {
+            margin-bottom: 0.5rem;
+        }
+        .demo-title {
+            color: #c63e70;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-container">
+            <h1 class="demo-title">📸 Review Image Upload Feature</h1>
+
+            <div class="feature-list">
+                <h5>✨ New Features Added:</h5>
+                <ul>
+                    <li><strong>📷 Image Upload:</strong> Customers can now upload photos with their reviews</li>
+                    <li><strong>🔍 Live Preview:</strong> See image preview before submitting the review</li>
+                    <li><strong>✅ Validation:</strong> File type and size validation (JPEG, PNG, GIF, WebP, max 5MB)</li>
+                    <li><strong>👁️ Image Display:</strong> Review images are displayed in product pages with click-to-zoom</li>
+                    <li><strong>🔧 Admin Management:</strong> Admins can view all review images in the dashboard</li>
+                    <li><strong>🌐 API Support:</strong> REST API endpoints support image uploads</li>
+                </ul>
+            </div>
+
+            <div class="review-card">
+                <h4 class="text-center mb-4" style="color: #c63e70;">
+                    <i class="bi bi-pencil-square me-2"></i>Example Review Form
+                </h4>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" style="color: #c63e70;">Your Name</label>
+                        <input type="text" class="form-control rounded-pill" placeholder="Enter your name" value="John Doe">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" style="color: #c63e70;">Rating</label>
+                        <div class="rating-stars">
+                            ⭐⭐⭐⭐⭐ <small class="text-muted">(5 stars)</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" style="color: #c63e70;">Your Review</label>
+                        <textarea class="form-control rounded-3" rows="3" placeholder="Share your experience...">Amazing quality! The product arrived exactly as shown. Very satisfied with my purchase.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" style="color: #c63e70;">
+                            <i class="bi bi-camera me-1"></i>Upload Photos <small class="text-muted">(Optional)</small>
+                        </label>
+                        <input type="file" id="demoReviewImage" class="form-control rounded-pill"
+                               accept="image/*" onchange="previewReviewImage(this)">
+                        <small class="text-muted">Share photos related to your experience</small>
+                        <div id="demoImagePreview" class="text-center">
+                            <p class="text-muted small mb-2">📸 Image Preview:</p>
+                            <img id="demoImagePreviewImg" src="" alt="Review Image Preview" class="image-preview img-fluid">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn w-100 fw-bold rounded-pill" style="background:#dc769a;color:white; padding: 12px;" onclick="simulateSubmit()">
+                        <i class="bi bi-send me-2"></i>Submit Review
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center">
+                <a href="/" class="btn" style="background: linear-gradient(135deg, #c63e70 0%, #dc769a 100%); color: white; border-radius: 25px; padding: 12px 30px; margin-right: 10px;">
+                    🏠 Back to GlamNails
+                </a>
+                <a href="/products" class="btn btn-outline-primary rounded-pill px-4 py-2">
+                    🛍️ Browse Products
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function previewReviewImage(input) {
+            const preview = document.getElementById('demoImagePreview');
+            const previewImg = document.getElementById('demoImagePreviewImg');
+
+            if (input.files && input.files[0]) {
+                // Validate file type
+                const fileType = input.files[0].type;
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp'];
+
+                if (!validTypes.includes(fileType)) {
+                    alert('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                // Validate file size (max 5MB)
+                const fileSize = input.files[0].size / 1024 / 1024; // Size in MB
+                if (fileSize > 5) {
+                    alert('Image size should be less than 5MB');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        function simulateSubmit() {
+            const imageInput = document.getElementById('demoReviewImage');
+            const hasImage = imageInput.files && imageInput.files[0];
+
+            let message = '✅ Review submitted successfully!';
+            if (hasImage) {
+                message += '\n📸 Image uploaded with your review!';
+            } else {
+                message += '\n💡 Tip: You can upload photos with your reviews next time!';
+            }
+
+            alert(message);
+        }
+    </script>
+</body>
+</html>

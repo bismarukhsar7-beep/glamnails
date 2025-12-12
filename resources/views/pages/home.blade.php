@@ -36,84 +36,40 @@
             <h2 class="fw-bold mb-5" style="color: #c63e70;">✨ Explore Our Categories ✨</h2>
 
             <div class="row g-4 justify-content-center">
-
-
-                <!-- Nail Polishes -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="card border-0 shadow-sm rounded-4">
-                        <img src="{{ asset('images/nailpolish (2).jpg') }}" class="card-img-top"
-                             alt="Nail Polishes"
-                             style="height: 300px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
-
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #c63e70;">Nail Polishes</h5>
-
-                            <a href="{{ url('/products?category=Nail Polishes') }}" class="btn"
-                               style="background-color: #dc769a; color: #fff; border-radius: 25px;">
-                                View Products
-                            </a>
+                @forelse($categories as $cat)
+                    @php
+                        // Fallback image mapping for existing categories
+                        $imageMap = [
+                            'Nail Polishes' => 'nailpolish (2).jpg',
+                            'nail polishes' => 'nailpolish (2).jpg',
+                            'Accessories' => 'accessories.jpg',
+                            'accessories' => 'accessories.jpg',
+                            'Nail Care' => 'nailcare.jpg',
+                            'nail care' => 'nailcare.jpg',
+                            'Tools' => 'tools.jpg',
+                            'tools' => 'tools.jpg',
+                        ];
+                        $imagePath = $cat->image 
+                            ? asset($cat->image) 
+                            : (isset($imageMap[$cat->name]) ? asset('images/' . $imageMap[$cat->name]) : asset('images/nailpolish (2).jpg'));
+                    @endphp
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <img src="{{ $imagePath }}" class="card-img-top"
+                                 alt="{{ $cat->name }}"
+                                 style="height: 300px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold" style="color: #c63e70;">{{ $cat->name }}</h5>
+                                <a href="{{ route('products.index', ['category' => $cat->name]) }}" class="btn"
+                                   style="background-color: #dc769a; color: #fff; border-radius: 25px;">
+                                    View Products
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-
-                <!-- Accessories -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="card border-0 shadow-sm rounded-4">
-                        <img src="{{ asset('images/accessories.jpg') }}" class="card-img-top"
-                             alt="Accessories"
-                             style="height: 300px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
-
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #c63e70;">Accessories</h5>
-
-                            <a href="{{ url('/products?category=Accessories') }}" class="btn"
-                               style="background-color: #dc769a; color: #fff; border-radius: 25px;">
-                                View Products
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Nail Care -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="card border-0 shadow-sm rounded-4">
-                        <img src="{{ asset('images/nailcare.jpg') }}" class="card-img-top"
-                             alt="Nail Care"
-                             style="height: 300px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
-
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #c63e70;">Nail Care</h5>
-
-                            <a href="{{ url('/products?category=Nail Care') }}" class="btn"
-                               style="background-color: #dc769a; color: #fff; border-radius: 25px;">
-                                View Products
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Tools -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="card border-0 shadow-sm rounded-4">
-                        <img src="{{ asset('images/tools.jpg') }}" class="card-img-top"
-                             alt="Tools"
-                             style="height: 300px; object-fit: cover; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
-
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #c63e70;">Tools</h5>
-
-                            <a href="{{ url('/products?category=Tools') }}" class="btn"
-                               style="background-color: #dc769a; color: #fff; border-radius: 25px;">
-                                View Products
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
+                @empty
+                    <p class="text-muted">No categories yet.</p>
+                @endforelse
             </div>
         </div>
     </section>

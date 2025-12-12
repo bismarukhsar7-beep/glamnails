@@ -5,14 +5,22 @@
     <h2>Welcome, Admin!</h2>
 {{--    <p>This is your dashboard. You can now add, edit, delete products and categories.</p>--}}
 
-    <div class="mt-4">
-        <a href="{{ route('admin.products') }}" class="btn btn-primary mb-2">
+    <div class="mt-4 d-flex flex-wrap gap-2">
+        <a href="{{ route('admin.products') }}" class="btn btn-primary shadow-sm">
             Manage Products
         </a>
-
-{{--        <a href="#" class="btn btn-secondary mb-2">--}}
-{{--            Manage Categories (coming soon)--}}
-{{--        </a>--}}
+        <a href="{{ route('admin.categories') }}" class="btn btn-primary shadow-sm">
+            Manage Categories
+        </a>
+        <a href="{{ route('admin.orders') }}" class="btn btn-primary shadow-sm">
+            Manage Orders
+        </a>
+        <a href="{{ route('admin.reviews') }}" class="btn btn-primary shadow-sm">
+            Manage Reviews
+        </a>
+        <a href="{{ route('admin.messages') }}" class="btn btn-primary shadow-sm">
+            Contact Messages
+        </a>
     </div>
 
 @endsection

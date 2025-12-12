@@ -1,42 +1,45 @@
 @extends('admin.layout')
 
 @section('content')
-
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Add Product</h2>
+        <h2 class="mb-0">Edit Category</h2>
         <div class="btn-group">
             <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">Dashboard</a>
-            <a href="{{ route('admin.products') }}" class="btn btn-outline-primary btn-sm">All Products</a>
+            <a href="{{ route('admin.categories') }}" class="btn btn-outline-primary btn-sm">All Categories</a>
         </div>
     </div>
 
-    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.categories.update', $category->id) }}" enctype="multipart/form-data">
         @csrf
 
-        <label>Name</label>
-        <input type="text" name="name" class="form-control mb-2">
-
-        <label>Category</label>
-        <select name="category" class="form-control mb-2" required>
-            <option value="">Select a category</option>
-            @foreach($categories ?? [] as $cat)
-                <option value="{{ $cat->name }}">{{ $cat->name }}</option>
-            @endforeach
-        </select>
-
-        <label>Price</label>
-        <input type="number" name="price" class="form-control mb-2">
-
-        <label>Description</label>
-        <textarea name="desc" class="form-control mb-2"></textarea>
-
-        <label>Image</label>
-        <input type="file" name="image" id="productImageInput" class="form-control mb-2" accept="image/*" onchange="previewImage(this, 'productImagePreview')">
-        <div id="productImagePreview" class="mt-2" style="display: none;">
-            <img id="productImagePreviewImg" src="" alt="Preview" style="max-width: 300px; max-height: 300px; border-radius: 8px; border: 2px solid #dc769a;">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
         </div>
 
-        <button class="btn btn-success">Save</button>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="3">{{ $category->description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            @if($category->image)
+                <div class="mb-2">
+                    <p class="text-muted small">Current Image:</p>
+                    <img src="{{ $category->image_url }}" alt="{{ $category->name }}" style="max-width: 200px; max-height: 200px; border-radius: 8px; border: 2px solid #dc769a;">
+                </div>
+            @endif
+            <input type="file" name="image" id="categoryImageInputEdit" class="form-control" accept="image/*" onchange="previewImage(this, 'categoryImagePreviewEdit')">
+            <small class="text-muted">Upload a new image to replace the current one</small>
+            <div id="categoryImagePreviewEdit" class="mt-2" style="display: none;">
+                <p class="text-muted small">New Image Preview:</p>
+                <img id="categoryImagePreviewImgEdit" src="" alt="Preview" style="max-width: 300px; max-height: 300px; border-radius: 8px; border: 2px solid #dc769a;">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ route('admin.categories') }}" class="btn btn-secondary">Cancel</a>
     </form>
 
     <script>
@@ -78,5 +81,5 @@
             }
         }
     </script>
-
 @endsection
+
